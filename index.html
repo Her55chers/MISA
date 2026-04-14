@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISA AMIS CHATBOT PRO</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>MISA AMIS</h2>
+            <div class="topic-buttons">
+                <button onclick="sendTopic('giới thiệu')">Giới thiệu</button>
+                <button onclick="sendTopic('khách hàng')">Khách hàng</button>
+                <button onclick="sendTopic('vai trò')">Vai trò</button>
+                <button onclick="sendTopic('giải pháp')">Giải pháp kỹ thuật</button>
+                <button onclick="sendTopic('lộ trình')">Lộ trình</button>
+                <button onclick="sendTopic('kiến trúc')">Kiến trúc</button>
+                <hr>
+                <button class="demo-btn" onclick="openModal('accounting')">📊 Demo Kế toán</button>
+                <button class="demo-btn" onclick="openModal('hr')">👨‍💼 Demo Nhân sự</button>
+                <button class="demo-btn" onclick="openModal('crm')">📞 Demo CRM</button>
+            </div>
+        </aside>
+
+        <main class="chat-area">
+            <header>
+                <h1>TRỢ LÝ ẢO MISA AMIS</h1>
+            </header>
+            <div id="chat-box" class="chat-box">
+                <div class="message bot-msg">Chào bạn! Tôi có thể giúp gì cho bạn về giải pháp MISA AMIS?</div>
+            </div>
+            <div class="input-group">
+                <input type="text" id="user-input" placeholder="Nhập câu hỏi tại đây (vd: giới thiệu, lộ trình...)" onkeypress="handleEnter(event)">
+                <button onclick="sendMessage()">Gửi</button>
+            </div>
+        </main>
+    </div>
+
+    <div id="modal-overlay" class="overlay">
+        <div class="modal">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div id="modal-content"></div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
