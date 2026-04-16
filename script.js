@@ -3,7 +3,6 @@
  * Kiến trúc: Object-Oriented Programming (OOP)
  * Chức năng: Xử lý tri thức chuyên sâu & Tương tác giao diện
  */
-
 class MisaAmisKnowledgeBase {
     constructor() {
         this.knowledge = {
@@ -28,14 +27,15 @@ class MisaAmisKnowledgeBase {
                 Họ sử dụng hệ thống để theo dõi đơn ứng tuyển, tổ chức các đợt tuyển dụng, lập kế hoạch đào tạo, chấm công tự động và đảm bảo quyền lợi về bảo hiểm xã hội, thuế thu nhập cá nhân cho nhân viên. 
                 Họ cũng có vai trò tư vấn cho ban lãnh đạo về chiến lược nhân sự và phúc lợi
                 <br><b>3. Nhân viên:</b> Nhân viên là người trực tiếp sử dụng hệ thống để quản lý thông tin cá nhân, theo dõi lương thưởng, đăng ký nghỉ phép, chấm công và tham gia các chương trình đào tạo. Họ có thể tra cứu hợp đồng lao động, bảo hiểm xã hội, lịch làm việc, cũng như gửi đề xuất tăng lương, khen thưởng hoặc phản hồi về công việc. Hệ thống giúp nhân viên tương tác dễ dàng với phòng nhân sự mà không cần đến trực tiếp, đồng thời minh bạch hóa các chính sách nhân sự.
-                
+               ` 
             },
             role: {
                 title: "📌 3. VAI TRÒ TRONG CHIẾN LƯỢC CHUYỂN ĐỔI SỐ",
                 content: `MISA AMIS đóng vai trò là "Xương sống số" (Digital Backbone) giúp doanh nghiệp đột phá hiệu suất:
                 <br><br><b>• Tự động hóa liên thông:</b> Khi Sales chốt đơn trên CRM, dữ liệu lập tức chuyển về Kế toán để xuất hóa đơn và chuyển về Kho để chuẩn bị hàng hóa.
                 <br><b>• Hỗ trợ điều hành:</b> Cung cấp hệ thống báo cáo BI (Business Intelligence) trực quan, giúp CEO nắm bắt sức khỏe tài chính - nhân sự theo thời gian thực (Real-time).
-                <br><b>• Tăng năng suất lao động:</b> Giảm 80% các tác vụ nhập liệu thủ công, loại bỏ sai sót do con người và tối ưu hóa chi phí vận hành.`
+                <br><b>• Tăng năng suất lao động:</b> Giảm 80% các tác vụ nhập liệu thủ công, loại bỏ sai sót do con người và tối ưu hóa chi phí vận hành.
+                `
             },
             solution: {
                 title: "📌 4. GIẢI PHÁP KỸ THUẬT & CÔNG NGHỆ LÕI",
@@ -43,7 +43,8 @@ class MisaAmisKnowledgeBase {
                 <br><br><b>• Nền tảng Cloud Native:</b> Truy cập mọi lúc mọi nơi trên Web và Mobile App. 
                 <br><b>• Công nghệ Microservices:</b> Giúp hệ thống hoạt động ổn định, dễ dàng nâng cấp từng thành phần mà không gây gián đoạn.
                 <br><b>• Bảo mật đa lớp:</b> Đạt chuẩn ISO 27001, mã hóa dữ liệu AES-256, xác thực 2 lớp (2FA) và bảo mật IP.
-                <br><b>• Hệ sinh thái mở (Open API):</b> Sẵn sàng kết nối với các hệ thống ERP ngoại, sàn TMĐT, ngân hàng điện tử và chữ ký số.`
+                <br><b>• Hệ sinh thái mở (Open API):</b> Sẵn sàng kết nối với các hệ thống ERP ngoại, sàn TMĐT, ngân hàng điện tử và chữ ký số.
+                `
             },
             roadmap: {
                 title: "📌 5. LỘ TRÌNH TRIỂN KHAI CHUYÊN NGHIỆP",
@@ -126,21 +127,47 @@ class MisaChatApp {
         this.appendMessage('user', text);
         this.userInput.value = '';
 
-        // Giả lập hiệu ứng bot đang suy nghĩ
-        setTimeout(() => {
+        // Bổ sung async để chờ LLM phản hồi
+        setTimeout(async () => {
             const intent = this.kb.matchIntent(text);
             let response = "";
 
             if (intent) {
                 const data = this.kb.knowledge[intent];
                 response = `<strong>${data.title}</strong><br><br>${data.content}`;
+                this.appendMessage('bot', response);
             } else {
-                response = "❗ Hệ thống chưa nhận diện được yêu cầu này. Bạn vui lòng sử dụng các nút danh mục bên trái hoặc hỏi về: Giới thiệu, Lộ trình, Nghiệp vụ, Kiến trúc...";
-            }
+                // 1. Hiển thị hiệu ứng chờ
+                this.appendMessage('bot', "<em>Hệ thống AI đang suy nghĩ...</em>");
 
-            this.appendMessage('bot', response);
+                try {
+                    // 2. Khởi tạo kết nối đến Backend Node.js
+                    // Hãy tự tay viết hàm fetch gọi sang cổng 3000 ở đây
+                    // (Lưu ý: method POST, headers chứa Content-Type, truyền biến 'text' vào body)
+                    const res = await fetch('http://localhost:3000/api/chat', { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message: text }) 
+                });
+                    
+                    const data = await res.json();
+                    
+                    // 3. Xóa dòng chữ "đang suy nghĩ"
+                    this.chatBox.lastChild.remove(); 
+                    
+                    // 4. In câu trả lời AI ra màn hình
+                    response = data.reply;
+                    this.appendMessage('bot', response);
+
+                } catch (error) {
+                    console.error("Lỗi gọi LLM:", error);
+                    this.chatBox.lastChild.remove();
+                    this.appendMessage('bot', "❗ Xin lỗi, hệ thống AI đang tạm thời gián đoạn.");
+                }
+            }
         }, 600);
     }
+
 
     appendMessage(sender, text) {
         const msgDiv = document.createElement('div');

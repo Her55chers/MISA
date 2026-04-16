@@ -1,0 +1,27 @@
+{
+  "name": "misa",
+  "version": "1.0.0",
+  "description": "&lt;3",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Her55chers/MISA.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Her55chers/MISA/issues"
+  },
+  "homepage": "https://github.com/Her55chers/MISA#readme",
+  "dependencies": {
+    "@tavily/core": "^0.7.2",
+    "cors": "^2.8.6",
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1"
+  }
+}
